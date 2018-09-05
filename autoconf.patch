@@ -1,0 +1,22 @@
+--- mozilla-unified-c3e447e07077/build/moz.configure/old.configure~	2018-03-12 12:36:00.000000000 +0000
++++ mozilla-unified-c3e447e07077/build/moz.configure/old.configure	2018-03-27 15:35:22.490908048 +0000
+@@ -101,7 +101,6 @@
+     if refresh:
+         log.info('Refreshing %s with %s', old_configure, autoconf)
+         script = subprocess.check_output([
+-            shell, autoconf,
++            shell, "/usr/bin/autoreconf",
+-            '--localdir=%s' % os.path.dirname(old_configure),
+             old_configure + '.in'])
+ 
+--- mozilla-unified-c3e447e07077/build/moz.configure/old.configure~	2018-03-27 15:35:22.000000000 +0000
++++ mozilla-unified-c3e447e07077/build/moz.configure/old.configure	2018-03-27 15:41:34.459098640 +0000
+@@ -83,7 +83,7 @@
+             old_configure = os.path.join(old_configure_dir, 'js', 'src',
+                                          os.path.basename(old_configure))
+ 
+-    refresh = True
++    refresh = False
+     if exists(old_configure):
+         mtime = getmtime(old_configure)
+         aclocal = os.path.join(build_env.topsrcdir, 'build', 'autoconf',

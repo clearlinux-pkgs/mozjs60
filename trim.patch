@@ -1,0 +1,18 @@
+--- mozilla-unified-c3e447e07077/js/src/jsapi.cpp~	2018-03-12 12:36:00.000000000 +0000
++++ mozilla-unified-c3e447e07077/js/src/jsapi.cpp	2018-04-21 15:13:09.951618756 +0000
+@@ -18,6 +18,7 @@
+ #include <stdarg.h>
+ #include <string.h>
+ #include <sys/stat.h>
++#include <malloc.h>
+ 
+ #include "jsarray.h"
+ #include "jsatom.h"
+@@ -1324,6 +1325,7 @@
+     AssertHeapIsIdle(cx);
+     JS::PrepareForFullGC(cx);
+     cx->gc.gc(GC_NORMAL, JS::gcreason::API);
++    malloc_trim(0);
+ }
+ 
+ JS_PUBLIC_API(void)
