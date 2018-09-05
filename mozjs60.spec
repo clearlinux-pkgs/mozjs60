@@ -99,8 +99,8 @@ export FCFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export CXXFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition -fassociative-math -fno-signed-zeros"
 export AUTOCONF="/usr/bin/autoconf213"
-CFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp -flto=10'
-CXXFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp -flto=10'
+CFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp '
+CXXFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp '
 export CC=gcc CXX=g++ PYTHON=/usr/bin/python2
 
 pushd js/src
@@ -109,7 +109,7 @@ autoconf213
 %configure --disable-static --with-x \
     --prefix=/usr \
     --disable-debug \
-    --disable-debug-symbols \
+    --enable-debug-symbols \
     --disable-strip \
     --enable-gold \
     --enable-optimize="-O3" \
