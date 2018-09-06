@@ -38,6 +38,10 @@ Patch4: emitter.patch
 Patch5: emitter_test.patch
 Patch6: trim.patch
 
+# Suppress stripping binaries
+%define __strip /bin/true
+%define debug_package %{nil}
+
 %description
 your system under test with mock objects and make assertions about how they
         have been used.
@@ -84,10 +88,6 @@ lib components for the mozjs60 package.
 rm -rf ../../modules/zlib
 
 
-pushd ..
-cp -a  firefox-60.1.0  build-avx2
-popd
-
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
@@ -111,9 +111,8 @@ autoconf213
     --disable-debug \
     --enable-debug-symbols \
     --disable-strip \
-    --enable-gold \
+    --disable-jemalloc \
     --enable-optimize="-O3" \
-    --enable-pie \
     --enable-posix-nspr-emulation \
     --enable-readline \
     --enable-release \
@@ -127,54 +126,16 @@ autoconf213
 make V=1  %{?_smp_mflags}
 popd
 
-pushd ../build-avx2/js/src
-export CFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition -march=haswell"
-export FCFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-export CXXFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition -march=haswell"
-export AUTOCONF="/usr/bin/autoconf213"
-CFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp -flto=10'
-CXXFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp -flto=10'
-export CC=gcc CXX=g++ PYTHON=/usr/bin/python2
-
-%configure --disable-static --with-x \
-    --prefix=/usr \
-    --disable-debug \
-    --disable-debug-symbols \
-    --disable-strip \
-    --enable-gold \
-    --enable-optimize="-O3" \
-    --enable-pie \
-    --enable-posix-nspr-emulation \
-    --enable-readline \
-    --enable-release \
-    --enable-shared-js \
-    --enable-tests \
-    --with-intl-api \
-    --with-system-zlib \
-    --program-suffix=60 \
-    --libdir=/usr/lib64/haswell \
-    --without-system-icu
-make V=1  %{?_smp_mflags}
-
-popd
-
 
 %install
 export SOURCE_DATE_EPOCH=1501084420
 rm -rf %{buildroot}
-pushd ../build-avx2/js/src
-%make_install
-popd
-rm -rf %{buildroot}/usr/bin/*
 pushd js/src
 %make_install
 popd
 rm %{buildroot}/usr/lib64/*.ajs
-rm %{buildroot}/usr/lib64/haswell/libjs_static.ajs
 
 cp %{buildroot}/usr/lib64/libmozjs-60.so %{buildroot}/usr/lib64/libmozjs-60.so.0
-cp %{buildroot}/usr/lib64/haswell/libmozjs-60.so %{buildroot}/usr/lib64/haswell/libmozjs-60.so.0
 #find %{buildroot}/usr/{lib/pkgconfig,include} -type f -exec chmod -c a-x {} +
 ## make_install_append content
 #mv %{buildroot}/usr/lib64/pkgconfig/js.pc %{buildroot}/usr/lib64/pkgconfig/mozjs-60.pc
@@ -198,6 +159,4 @@ cp %{buildroot}/usr/lib64/haswell/libmozjs-60.so %{buildroot}/usr/lib64/haswell/
 %defattr(-,root,root,-)
 /usr/lib64/libmozjs-60.so
 /usr/lib64/libmozjs-60.so.0
-/usr/lib64/haswell/libmozjs-60.so
-/usr/lib64/haswell/libmozjs-60.so.0
 
