@@ -94,10 +94,10 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
 export SOURCE_DATE_EPOCH=1501084420
-export CFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition -fassociative-math -fno-signed-zeros "
+export CFLAGS="-Os -falign-functions=4 -fno-semantic-interposition -fassociative-math -fno-signed-zeros "
 export FCFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-export CXXFLAGS="-O3 -falign-functions=32 -fno-semantic-interposition -fassociative-math -fno-signed-zeros"
+export CXXFLAGS="-Os -falign-functions=4 -fno-semantic-interposition -fassociative-math -fno-signed-zeros"
 export AUTOCONF="/usr/bin/autoconf213"
 CFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp '
 CXXFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp '
