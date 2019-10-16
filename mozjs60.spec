@@ -3,7 +3,7 @@
 #
 Name     : mozjs60
 Version  : 60
-Release  : 24
+Release  : 25
 Source0  : https://ftp.mozilla.org/pub/firefox/releases/60.1.0esr/source/firefox-60.1.0esr.source.tar.xz
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.0 LGPL-2.1 MIT MPL-2.0-no-copyleft-exception
